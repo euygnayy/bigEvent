@@ -34,7 +34,7 @@ form.verify({
 
 $("#register .layui-form").on("submit",function(e){
     // 1.阻止默认行为
-    e.prevenDefault();
+    e.preventDefault();
 
     // 2.收集数据
     var data = $(this).serialize();
@@ -61,3 +61,30 @@ $("#register .layui-form").on("submit",function(e){
         }
     });
 });
+
+
+
+//------------------------------登录
+
+$('#login form').on('submit', function (e) {
+    e.preventDefault();
+
+    // 收集账号、密码
+    var data = $(this).serialize();
+    // ajax提交
+    $.ajax({
+        type: 'POST',
+        url: 'http://ajax.frontend.itheima.net/api/login',
+        data: data,
+        success: function (res) {
+            // 无论登录成功，还是失败，都给提示
+            layer.msg(res.message);
+            if (res.status === 0) {
+                // 把token保存到本地存储
+                localStorage.setItem('token', res.token);
+                // 跳转到index.html
+                location.href = '/3a前端/11.大事件项目/大事件项目.day1/bigEvent/index.html';
+            }
+        }
+    });
+})
