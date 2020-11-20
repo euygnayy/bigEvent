@@ -14,6 +14,24 @@ $("#goto-login").on("click",function() {
 
 
 // ------------------------------注册
+
+// -----------------------------正则表达式
+var form = layui.form;
+form.verify({
+    // 规则名:[正则、不符合正则提醒信息]
+    changdu:[/^\S{6,12}$/,"不满足长度要求"],
+
+    // 规则名 函数 必填 有return 不符合正则提现信息
+    same:function(val){
+        // 第一输入：直接获取；HTML结构上做一些简单类名补充，方便获取值
+        // 再次输入：val
+        if ($(".pwd").val() != val) {
+            return "两次输入密码不一致";
+        }
+    }
+});
+
+
 $("#register .layui-form").on("submit",function(e){
     // 1.阻止默认行为
     e.prevenDefault();
